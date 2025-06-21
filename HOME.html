@@ -2,102 +2,359 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Innovative Landing Page</title>
+    <title>Modern Calculator</title>
     <style>
         :root {
-          --primary: #0d47a1;
-          --secondary: #1976d2;
-          --accent: #ffca28;
-          --bg: #f1f3f5;
-          --text: #212121;
-          --light: #fff;
-          --radius: 12px;
-          --transition: 0.3s;
+          --primary: #4a90e2;
+          --primary-light: #89b7f5;
+          --accent: #f39c12;
+          --bg-gradient: linear-gradient(135deg, #667eea, #764ba2);
+          --button-bg: #ffffff33;
+          --button-hover: #ffffff55;
+          --shadow-color: rgba(0, 0, 0, 0.2);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-          font-family: 'Poppins', sans-serif;
-          background: var(--bg);
-          color: var(--text);
-          line-height: 1.6;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          background: var(--bg-gradient);
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        .container { max-width: 1200px; width: 90%; margin: 0 auto; }
-        header { background: var(--light); box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 10; }
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; }
-        .logo { font-size: 1.75rem; font-weight: bold; color: var(--primary); }
-        ul.nav-links { list-style: none; display: flex; }
-        ul.nav-links li { margin-left: 2rem; position: relative; }
-        ul.nav-links a { text-decoration: none; color: var(--text); font-weight: 500; transition: color var(--transition); }
-        ul.nav-links a:hover { color: var(--primary); }
-        ul.nav-links li::after { content: ''; position: absolute; width: 0; height: 3px; background: var(--primary); left: 0; bottom: -5px; transition: width var(--transition); }
-        ul.nav-links li:hover::after { width: 100%; }
-        .hero { text-align: center; padding: 8rem 1rem; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: var(--light); position: relative; overflow: hidden; }
-        .hero h1 { font-size: 3rem; margin-bottom: 1rem; }
-        .hero p { font-size: 1.2rem; max-width: 600px; margin: 0 auto 2rem; }
-        .btn { display: inline-block; padding: 0.75rem 2rem; background: var(--accent); color: var(--text); border-radius: var(--radius); font-weight: 600; transition: transform var(--transition), background var(--transition); }
-        .btn:hover { transform: translateY(-3px); background: #ffb300; }
-        .shape { position: absolute; border-radius: 50%; opacity: 0.2; animation: float 6s ease-in-out infinite; }
-        .shape.one { width: 200px; height: 200px; background: var(--light); top: -50px; left: -50px; }
-        .shape.two { width: 150px; height: 150px; background: var(--accent); bottom: -75px; right: -75px; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(20px); } }
-        .features { padding: 6rem 0; background: var(--bg); }
-        .features grid { }
-        .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2.5rem; }
-        .card { background: var(--light); padding: 2.5rem; border-radius: var(--radius); box-shadow: 0 6px 15px rgba(0,0,0,0.05); transition: transform var(--transition), box-shadow var(--transition); text-align: center; }
-        .card:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0,0,0,0.1); }
-        .card h3 { margin-bottom: 1rem; color: var(--primary); }
-        .card p { font-size: 1rem; }
-        footer { background: var(--light); text-align: center; padding: 2rem 0; font-size: 0.9rem; }
-        @media (max-width: 768px) { .hero h1 { font-size: 2.5rem; } .hero p { font-size: 1rem; } }
+        .calculator {
+          background: rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(10px);
+          border-radius: 20px;
+          box-shadow: 0 8px 20px var(--shadow-color);
+          padding: 30px;
+          width: 340px;
+        }
+        .display {
+          width: 100%;
+          height: 70px;
+          background: rgba(255, 255, 255, 0.2);
+          border-radius: 15px;
+          margin-bottom: 20px;
+          padding: 10px 20px;
+          color: #fff;
+          font-size: 2.2rem;
+          text-align: right;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          box-shadow: inset 0 4px 10px rgba(0,0,0,0.1);
+          overflow-x: auto;
+        }
+        .buttons {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          grid-gap: 15px;
+        }
+        button {
+          padding: 20px 0;
+          font-size: 1.4rem;
+          border: none;
+          border-radius: 12px;
+          background: var(--button-bg);
+          color: #fff;
+          box-shadow: 0 4px 10px var(--shadow-color);
+          backdrop-filter: blur(5px);
+          transition: transform 0.1s, background 0.2s;
+          cursor: pointer;
+        }
+        button:hover {
+          background: var(--button-hover);
+        }
+        button:active {
+          transform: scale(0.95);
+        }
+        button.operator {
+          background: var(--accent);
+          color: #2c3e50;
+        }
+        button.clear {
+          background: #e74c3c;
+        }
+        button.equal {
+          background: var(--primary);
+          grid-column: span 2;
+        }
+        /* Responsive */
+        @media (max-width: 400px) {
+          .calculator { width: 90%; padding: 20px; }
+          .display { font-size: 1.8rem; }
+          button { font-size: 1.2rem; padding: 15px 0; }
+        }
     </style>
 </head>
 <body>
-<header>
-    <div class="container">
-        <nav>
-            <div class="logo">YourBrand</div>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
+<div class="calculator">
+    <div class="display" id="display">0</div>
+    <div class="buttons">
+        <button class="clear" id="clear">C</button>
+        <button class="operator" data-op="/">÷</button>
+        <button class="operator" data-op="*">×</button>
+        <button class="operator" data-op="-">−</button>
+        <button data-num="7">7</button>
+        <button data-num="8">8</button>
+        <button data-num="9">9</button>
+        <button class="operator" data-op="+">+</button>
+        <button data-num="4">4</button>
+        <button data-num="5">5</button>
+        <button data-num="6">6</button>
+        <button data-num="1">1</button>
+        <button data-num="2">2</button>
+        <button data-num="3">3</button>
+        <button class="equal" id="equals">=</button>
+        <button data-num="0" style="grid-column: span 2;">0</button>
+        <button data-num=".">.</button>
     </div>
-</header>
-<section class="hero" id="home">
-    <div class="shape one"></div>
-    <div class="shape two"></div>
-    <h1>Design Your Impactful Landing Page</h1>
-    <p>Elevate your HTML & CSS skills by crafting a responsive, creative landing page with modern design elements and animations.</p>
-    <a href="#features" class="btn">Discover More</a>
-</section>
-<section class="features" id="features">
-    <div class="container cards">
-        <div class="card">
-            <h3>Responsive Grid</h3>
-            <p>Create fluid layouts with CSS Grid & Flexbox that adjust to all screen sizes seamlessly.</p>
-        </div>
-        <div class="card">
-            <h3>Semantic HTML</h3>
-            <p>Use meaningful tags for better accessibility and SEO, improving both user and search engine experience.</p>
-        </div>
-        <div class="card">
-            <h3>Dynamic Styling</h3>
-            <p>Apply hover states, transitions, and gradient backgrounds to make your sections come alive.</p>
-        </div>
-        <div class="card">
-            <h3>Sticky Navbar</h3>
-            <p>Keep navigation always visible with a sleek sticky header for improved usability.</p>
-        </div>
-    </div>
-</section>
-<footer id="contact">
-    <div class="container">
-        &copy; 2025 YourBrand. All rights reserved.
-    </div>
-</footer>
+</div>
+
+<script>
+    const display = document.getElementById('display');
+    const clearBtn = document.getElementById('clear');
+    const equalsBtn = document.getElementById('equals');
+    const numButtons = document.querySelectorAll('[data-num]');
+    const opButtons = document.querySelectorAll('[data-op]');
+
+    let current = '';
+    let previous = '';
+    let operator = null;
+
+    numButtons.forEach(btn => {
+      btn.addEventListener('click', () => handleNumber(btn.dataset.num));
+    });
+    opButtons.forEach(btn => {
+      btn.addEventListener('click', () => handleOperator(btn.dataset.op));
+    });
+    clearBtn.addEventListener('click', clearAll);
+    equalsBtn.addEventListener('click', calculate);
+
+    function handleNumber(num) {
+      if (num === '.' && current.includes('.')) return;
+      current = current + num;
+      updateDisplay(current);
+    }
+    function handleOperator(op) {
+      if (!current) return;
+      if (previous) calculate();
+      operator = op;
+      previous = current;
+      current = '';
+    }
+    function calculate() {
+      const prev = parseFloat(previous);
+      const curr = parseFloat(current);
+      if (isNaN(prev) || isNaN(curr)) return;
+      let result;
+      switch (operator) {
+        case '+': result = prev + curr; break;
+        case '-': result = prev - curr; break;
+        case '*': result = prev * curr; break;
+        case '/': result = prev / curr; break;
+      }
+      current = result;
+      operator = null;
+      previous = '';
+      updateDisplay(result);
+    }
+    function clearAll() {
+      current = '';
+      previous = '';
+      operator = null;
+      updateDisplay('0');
+    }
+    function updateDisplay(value) {
+      display.textContent = value;
+    }
+</script>
 </body>
 </html>
 
+
+
+
+
+
+
+
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Basic Calculator</title>-->
+<!--    <style>-->
+<!--        * {-->
+<!--          box-sizing: border-box;-->
+<!--          font-family: Arial, sans-serif;-->
+<!--        }-->
+<!--        body {-->
+<!--          display: flex;-->
+<!--          justify-content: center;-->
+<!--          align-items: center;-->
+<!--          height: 100vh;-->
+<!--          margin: 0;-->
+<!--          background: #f4f4f4;-->
+<!--        }-->
+<!--        .calculator {-->
+<!--          background: #fff;-->
+<!--          border-radius: 10px;-->
+<!--          box-shadow: 0 4px 10px rgba(0,0,0,0.1);-->
+<!--          padding: 20px;-->
+<!--          width: 320px;-->
+<!--        }-->
+<!--        .display {-->
+<!--          width: 100%;-->
+<!--          height: 60px;-->
+<!--          background: #222;-->
+<!--          color: #fff;-->
+<!--          font-size: 2rem;-->
+<!--          text-align: right;-->
+<!--          padding: 10px;-->
+<!--          border-radius: 5px;-->
+<!--          margin-bottom: 20px;-->
+<!--          overflow-x: auto;-->
+<!--        }-->
+<!--        .buttons {-->
+<!--          display: grid;-->
+<!--          grid-template-columns: repeat(4, 1fr);-->
+<!--          grid-gap: 10px;-->
+<!--        }-->
+<!--        button {-->
+<!--          padding: 20px;-->
+<!--          font-size: 1.2rem;-->
+<!--          border: none;-->
+<!--          border-radius: 5px;-->
+<!--          cursor: pointer;-->
+<!--          transition: background 0.2s;-->
+<!--        }-->
+<!--        button.operator {-->
+<!--          background: #f57c00;-->
+<!--          color: #fff;-->
+<!--        }-->
+<!--        button.clear {-->
+<!--          background: #e53935;-->
+<!--          color: #fff;-->
+<!--        }-->
+<!--        button.equal {-->
+<!--          background: #43a047;-->
+<!--          color: #fff;-->
+<!--          grid-column: span 2;-->
+<!--        }-->
+<!--        button:hover {-->
+<!--          filter: brightness(1.1);-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="calculator">-->
+<!--    <div class="display" id="display">0</div>-->
+<!--    <div class="buttons">-->
+<!--        <button class="clear" id="clear">C</button>-->
+<!--        <button class="operator" data-op="/">&divide;</button>-->
+<!--        <button class="operator" data-op="*">&times;</button>-->
+<!--        <button class="operator" data-op="-">&minus;</button>-->
+<!--        <button data-num="7">7</button>-->
+<!--        <button data-num="8">8</button>-->
+<!--        <button data-num="9">9</button>-->
+<!--        <button class="operator" data-op="+">+</button>-->
+<!--        <button data-num="4">4</button>-->
+<!--        <button data-num="5">5</button>-->
+<!--        <button data-num="6">6</button>-->
+<!--        <button data-num="1">1</button>-->
+<!--        <button data-num="2">2</button>-->
+<!--        <button data-num="3">3</button>-->
+<!--        <button class="equal" id="equals">=</button>-->
+<!--        <button data-num="0" style="grid-column: span 2;">0</button>-->
+<!--        <button data-num=".">.</button>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--    const display = document.getElementById('display');-->
+<!--    const clearBtn = document.getElementById('clear');-->
+<!--    const equalsBtn = document.getElementById('equals');-->
+<!--    const numButtons = document.querySelectorAll('[data-num]');-->
+<!--    const opButtons = document.querySelectorAll('[data-op]');-->
+
+<!--    let current = '';-->
+<!--    let previous = '';-->
+<!--    let operator = null;-->
+
+<!--    numButtons.forEach(btn => {-->
+<!--      btn.addEventListener('click', () => handleNumber(btn.getAttribute('data-num')));-->
+<!--    });-->
+
+<!--    opButtons.forEach(btn => {-->
+<!--      btn.addEventListener('click', () => handleOperator(btn.getAttribute('data-op')));-->
+<!--    });-->
+
+<!--    clearBtn.addEventListener('click', clearAll);-->
+<!--    equalsBtn.addEventListener('click', calculate);-->
+
+<!--    function handleNumber(num) {-->
+<!--      if (num === '.' && current.includes('.')) return;-->
+<!--      current = current.toString() + num.toString();-->
+<!--      updateDisplay(current);-->
+<!--    }-->
+
+<!--    function handleOperator(op) {-->
+<!--      if (current === '') return;-->
+<!--      if (previous !== '') {-->
+<!--        calculate();-->
+<!--      }-->
+<!--      operator = op;-->
+<!--      previous = current;-->
+<!--      current = '';-->
+<!--    }-->
+
+<!--    function calculate() {-->
+<!--      let result;-->
+<!--      const prev = parseFloat(previous);-->
+<!--      const curr = parseFloat(current);-->
+<!--      if (isNaN(prev) || isNaN(curr)) return;-->
+<!--      switch (operator) {-->
+<!--        case '+':-->
+<!--          result = prev + curr;-->
+<!--          break;-->
+<!--        case '-':-->
+<!--          result = prev - curr;-->
+<!--          break;-->
+<!--        case '*':-->
+<!--          result = prev * curr;-->
+<!--          break;-->
+<!--        case '/':-->
+<!--          result = prev / curr;-->
+<!--          break;-->
+<!--        default:-->
+<!--          return;-->
+<!--      }-->
+<!--      current = result;-->
+<!--      operator = null;-->
+<!--      previous = '';-->
+<!--      updateDisplay(result);-->
+<!--    }-->
+
+<!--    function clearAll() {-->
+<!--      current = '';-->
+<!--      previous = '';-->
+<!--      operator = null;-->
+<!--      updateDisplay('0');-->
+<!--    }-->
+
+<!--    function updateDisplay(value) {-->
+<!--      display.textContent = value;-->
+<!--    }-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
